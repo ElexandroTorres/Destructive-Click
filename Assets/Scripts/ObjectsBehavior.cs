@@ -5,6 +5,10 @@ using UnityEngine;
 public class ObjectsBehavior : MonoBehaviour
 {
     private Rigidbody objectRb;
+    private GameManager gameManager;
+
+    [SerializeField] private int destructionPoints;
+    [SerializeField] private ParticleSystem explosionParticle;
     private float minForce = 12;
     private float maxForce = 16;
     private float torqueRange = 10;
@@ -13,6 +17,8 @@ public class ObjectsBehavior : MonoBehaviour
 
     void Start()
     {
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+
         objectRb = GetComponent<Rigidbody>();
 
         objectRb.AddForce(RandomForce(), ForceMode.Impulse);
@@ -38,6 +44,8 @@ public class ObjectsBehavior : MonoBehaviour
     private void OnMouseDown()
     {
         Destroy(this.gameObject);
+        Instantiate(explosionParticle, transform.position, transform.rotation);
+        gameManager.UpdateScore(destructionPoints);
     }
 
 
