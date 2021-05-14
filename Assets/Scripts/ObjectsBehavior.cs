@@ -24,10 +24,20 @@ public class ObjectsBehavior : MonoBehaviour
 
     void Update()
     {
+        OutOfScreen();
+    }
+
+    private void OutOfScreen()
+    {
         if(transform.position.y < -7.0f)
         {
             Destroy(this.gameObject);
         }
+    }
+
+    private void OnMouseDown()
+    {
+        Destroy(this.gameObject);
     }
 
 
