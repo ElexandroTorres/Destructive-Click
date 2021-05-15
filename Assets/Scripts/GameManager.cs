@@ -10,19 +10,14 @@ public class GameManager : MonoBehaviour
     public bool isGameOver;
     [SerializeField] private List<GameObject> objects;
     [SerializeField] private TextMeshProUGUI scoreText;
-    [SerializeField] private TextMeshProUGUI gameOverText;
-    [SerializeField] private Button restartButton;
+    [SerializeField] private GameObject gameOverScreen;
+    [SerializeField] private GameObject titleScreen;
+
     private float spawnRate = 1.0f;
     private int score;
 
     void Start()
     {
-        isGameOver = false;
-        StartCoroutine(SpawnObject());
-        score = 0;
-        scoreText.text = "Score: " + score;
-        gameOverText.gameObject.SetActive(false);
-        restartButton.gameObject.SetActive(false);
     }
 
     IEnumerator SpawnObject()
@@ -44,12 +39,23 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         isGameOver = true;
-        gameOverText.gameObject.SetActive(true);
-        restartButton.gameObject.SetActive(true);
+        gameOverScreen.SetActive(true);
     }
 
     public void Restart()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void StartGame(int difficult)
+    {
+        spawnRate /= difficult;
+        score = 0;
+        scoreText.text = "Score: " + score;
+        isGameOver = false;
+        StartCoroutine(SpawnObject());
+        
+        gameOverScreen.SetActive(false);
+        titleScreen.SetActive(false);
     }
 }
