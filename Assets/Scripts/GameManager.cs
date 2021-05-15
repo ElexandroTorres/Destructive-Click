@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -9,6 +11,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private List<GameObject> objects;
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private TextMeshProUGUI gameOverText;
+    [SerializeField] private Button restartButton;
     private float spawnRate = 1.0f;
     private int score;
 
@@ -19,6 +22,7 @@ public class GameManager : MonoBehaviour
         score = 0;
         scoreText.text = "Score: " + score;
         gameOverText.gameObject.SetActive(false);
+        restartButton.gameObject.SetActive(false);
     }
 
     IEnumerator SpawnObject()
@@ -41,5 +45,11 @@ public class GameManager : MonoBehaviour
     {
         isGameOver = true;
         gameOverText.gameObject.SetActive(true);
+        restartButton.gameObject.SetActive(true);
+    }
+
+    public void Restart()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
