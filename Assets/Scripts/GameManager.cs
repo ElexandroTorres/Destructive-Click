@@ -12,14 +12,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private GameObject gameOverScreen;
     [SerializeField] private GameObject titleScreen;
-
     private float spawnRate = 1.0f;
     private int score;
-
-    void Start()
-    {
-    }
-
+    
     IEnumerator SpawnObject()
     {
         while(!isGameOver)

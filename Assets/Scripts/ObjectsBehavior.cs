@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class ObjectsBehavior : MonoBehaviour
 {
+    [SerializeField] private ParticleSystem explosionParticle;
     private Rigidbody objectRb;
     private GameManager gameManager;
     [SerializeField] private int destructionPoints;
-    [SerializeField] private ParticleSystem explosionParticle;
+    [SerializeField] private float yPositionSpawn = -2;
     private float minForce = 12;
     private float maxForce = 16;
     private float torqueRange = 10;
     private float xRangeSpawn = 4;
-    [SerializeField] private float yPositionSpawn = -2;
     private float yLimit = -7.0f;
 
     void Start()
@@ -54,7 +54,6 @@ public class ObjectsBehavior : MonoBehaviour
             gameManager.UpdateScore(destructionPoints);
         }
     }
-
 
     private Vector3 RandomForce()
     {
