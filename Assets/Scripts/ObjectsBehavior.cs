@@ -6,14 +6,14 @@ public class ObjectsBehavior : MonoBehaviour
 {
     private Rigidbody objectRb;
     private GameManager gameManager;
-
     [SerializeField] private int destructionPoints;
     [SerializeField] private ParticleSystem explosionParticle;
     private float minForce = 12;
     private float maxForce = 16;
     private float torqueRange = 10;
     private float xRangeSpawn = 4;
-    private float yPositionSpawn = -6;
+    [SerializeField] private float yPositionSpawn = -2;
+    private float yLimit = -7.0f;
 
     void Start()
     {
@@ -35,17 +35,24 @@ public class ObjectsBehavior : MonoBehaviour
 
     private void OutOfScreen()
     {
-        if(transform.position.y < -7.0f)
+        if(transform.position.y < yLimit)
         {
+            if(!this.gameObject.CompareTag("Bad"))
+            {
+                gameManager.GameOver();
+            }
             Destroy(this.gameObject);
         }
     }
 
     private void OnMouseDown()
     {
-        Destroy(this.gameObject);
-        Instantiate(explosionParticle, transform.position, transform.rotation);
-        gameManager.UpdateScore(destructionPoints);
+        if(!gameManager.isGameOver)
+        {
+            Destroy(this.gameObject);
+            Instantiate(explosionParticle, transform.position, transform.rotation);
+            gameManager.UpdateScore(destructionPoints);
+        }
     }
 
 
