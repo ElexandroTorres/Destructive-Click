@@ -8,14 +8,29 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public bool isGameOver;
+    [SerializeField] private Slider volumeControl;
     [SerializeField] private List<GameObject> objects;
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private TextMeshProUGUI livesText;
     [SerializeField] private GameObject gameOverScreen;
     [SerializeField] private GameObject titleScreen;
+    private AudioSource mainMusic;
     private float spawnRate = 1.0f;
     private int score;
     private int lives;
+
+    void Start()
+    {
+        mainMusic = GetComponent<AudioSource>();
+        mainMusic.volume = volumeControl.value; 
+        mainMusic.Play();
+        volumeControl.onValueChanged.AddListener(delegate {VolumeChangeCheck(); });
+    }
+
+    public void VolumeChangeCheck()
+    {
+        mainMusic.volume = volumeControl.value; 
+    }
     
     IEnumerator SpawnObject()
     {
@@ -54,6 +69,8 @@ public class GameManager : MonoBehaviour
         isGameOver = false;
         StartCoroutine(SpawnObject());
         
+        scoreText.gameObject.SetActive(true);
+        livesText.gameObject.SetActive(true);
         gameOverScreen.SetActive(false);
         titleScreen.SetActive(false);
     }
