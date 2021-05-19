@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
     private float spawnRate = 1.0f;
     private int score;
     private int lives;
+    private bool isPaused = false;
 
     void Start()
     {
@@ -25,6 +26,23 @@ public class GameManager : MonoBehaviour
         mainMusic.volume = volumeControl.value; 
         mainMusic.Play();
         volumeControl.onValueChanged.AddListener(delegate {VolumeChangeCheck(); });
+    }
+
+    void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            if(!isPaused)
+            {
+                Time.timeScale = 0;
+                isPaused = true;
+            }
+            else
+            {
+                Time.timeScale = 1;
+                isPaused = false;
+            }
+        }
     }
 
     public void VolumeChangeCheck()
