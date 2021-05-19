@@ -39,7 +39,7 @@ public class ObjectsBehavior : MonoBehaviour
         {
             if(!this.gameObject.CompareTag("Bad"))
             {
-                gameManager.GameOver();
+                gameManager.UpdateLives();
             }
             Destroy(this.gameObject);
         }

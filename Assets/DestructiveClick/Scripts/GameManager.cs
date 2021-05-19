@@ -10,10 +10,12 @@ public class GameManager : MonoBehaviour
     public bool isGameOver;
     [SerializeField] private List<GameObject> objects;
     [SerializeField] private TextMeshProUGUI scoreText;
+    [SerializeField] private TextMeshProUGUI livesText;
     [SerializeField] private GameObject gameOverScreen;
     [SerializeField] private GameObject titleScreen;
     private float spawnRate = 1.0f;
     private int score;
+    private int lives;
     
     IEnumerator SpawnObject()
     {
@@ -44,13 +46,28 @@ public class GameManager : MonoBehaviour
 
     public void StartGame(int difficult)
     {
+        lives = 3;
         spawnRate /= difficult;
         score = 0;
         scoreText.text = "Score: " + score;
+        livesText.text = "Lives: " + lives;
         isGameOver = false;
         StartCoroutine(SpawnObject());
         
         gameOverScreen.SetActive(false);
         titleScreen.SetActive(false);
+    }
+
+    public void UpdateLives()
+    {
+        if(lives > 0)
+        {
+            lives--;
+            livesText.text = "Score: " + lives;
+        }
+        else 
+        {
+            GameOver();
+        }
     }
 }
