@@ -55,6 +55,16 @@ public class ObjectsBehavior : MonoBehaviour
         }
     }
 
+    public void DestroyObject()
+    {
+        if(!gameManager.isGameOver)
+        {
+            Destroy(this.gameObject);
+            Instantiate(explosionParticle, transform.position, transform.rotation);
+            gameManager.UpdateScore(destructionPoints);
+        }
+    }
+
     private Vector3 RandomForce()
     {
         return Vector3.up * Random.Range(minForce, maxForce);

@@ -8,18 +8,13 @@ public class DifficultButton : MonoBehaviour
     private Button difficultButton;
     private GameManager gameManager;
     [SerializeField] private int difficult;
+    
     void Start()
     {
         difficultButton = GetComponent<Button>();
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 
         difficultButton.onClick.AddListener(SetDifficult);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     void SetDifficult()
