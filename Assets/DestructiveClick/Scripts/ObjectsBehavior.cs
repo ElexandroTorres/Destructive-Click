@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody))]
 public class ObjectsBehavior : MonoBehaviour
 {
     [SerializeField] private ParticleSystem explosionParticle;
@@ -15,7 +16,7 @@ public class ObjectsBehavior : MonoBehaviour
     private float xRangeSpawn = 4;
     private float yLimit = -7.0f;
 
-    void Start()
+    void Awake()
     {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 
@@ -47,12 +48,7 @@ public class ObjectsBehavior : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if(!gameManager.isGameOver)
-        {
-            Destroy(this.gameObject);
-            Instantiate(explosionParticle, transform.position, transform.rotation);
-            gameManager.UpdateScore(destructionPoints);
-        }
+        DestroyObject();
     }
 
     public void DestroyObject()
