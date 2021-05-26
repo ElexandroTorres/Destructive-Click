@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public bool isGameOver;
+
     [SerializeField] private Slider volumeControl;
     [SerializeField] private List<GameObject> objects;
     [SerializeField] private TextMeshProUGUI scoreText;
@@ -16,14 +17,17 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject titleScreen;
     [SerializeField] private GameObject pauseScreen;
     [SerializeField] private GameObject gameInfos;
+
     private AudioSource mainMusic;
+    private GameState state;
     private float spawnRate = 1.0f;
     private int score;
     private int lives;
     private bool isPaused = false;
-
+    
     void Start()
     {
+        state = GameState.MAINMENU;
         titleScreen.SetActive(true);
         mainMusic = GetComponent<AudioSource>();
         mainMusic.volume = volumeControl.value; 
@@ -35,18 +39,20 @@ public class GameManager : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Escape))
         {
-            if(!isPaused)
+            if(state == GameState.RUNING) 
             {
                 Time.timeScale = 0;
                 isPaused = true;
+                state = GameState.PAUSED;
             }
-            else
+            else if(state == GameState.PAUSED)
             {
                 Time.timeScale = 1;
                 isPaused = false;
+                state = GameState.RUNING;
             }
             
-            PauseGame(isPaused);
+            PauseGame(state);
         }
     }
 
@@ -57,7 +63,7 @@ public class GameManager : MonoBehaviour
     
     IEnumerator SpawnObject()
     {
-        while(!isGameOver)
+        while(state == GameState.RUNING)
         {
             yield return new WaitForSeconds(spawnRate);
             int index = Random.Range(0, objects.Count);
@@ -73,7 +79,7 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
-        isGameOver = true;
+        state = GameState.GAMEOVER;
         gameOverScreen.SetActive(true);
     }
 
@@ -84,12 +90,12 @@ public class GameManager : MonoBehaviour
 
     public void StartGame(int difficult)
     {
+        state = GameState.RUNING;
         lives = 3;
         spawnRate /= difficult;
         score = 0;
         scoreText.text = "Score: " + score;
         livesText.text = lives + " Lives";
-        isGameOver = false;
         StartCoroutine(SpawnObject());
         
         gameInfos.SetActive(true);
@@ -110,14 +116,18 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void PauseGame(bool state)
+    private void PauseGame(GameState currentState)
     {
-        pauseScreen.SetActive(state);
         Color screenColor = new Color32(0, 0, 0, 0);
 
-        if(state == true)
+        if(currentState == GameState.PAUSED)
         {
+            pauseScreen.SetActive(true);
             screenColor.a = 0.5f;
+        }
+        else 
+        {
+            pauseScreen.SetActive(false);
         }
 
         pauseScreen.transform.parent.gameObject.GetComponent<Image>().color = screenColor;

@@ -1,7 +1,7 @@
-public enum State
+public enum GameState
 {
     MAINMENU,
-    DIFFICULTMENU,
-    INGAME,
-    PAUSED
+    RUNING,
+    PAUSED,
+    GAMEOVER
 }
