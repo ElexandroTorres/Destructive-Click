@@ -16,5 +16,7 @@
 	<img alt="Gif showing how the game works" title="Game demonstration" src="./Images/DestructiveCrates.gif"
 </h1>
 	
+<p>To play: https://play.unity.com/mg/other/destructive-click</p>
+	
 
 
