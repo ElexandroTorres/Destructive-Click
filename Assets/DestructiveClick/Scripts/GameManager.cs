@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject titleScreen;
     [SerializeField] private GameObject pauseScreen;
     [SerializeField] private GameObject gameInfos;
+    [SerializeField] private TextMeshProUGUI finalScore;
 
     private AudioSource mainMusic;
     private GameState state;
@@ -52,7 +53,7 @@ public class GameManager : MonoBehaviour
                 state = GameState.RUNING;
             }
             
-            PauseGame(state);
+            DisplayMenus(state);
         }
     }
 
@@ -80,7 +81,10 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         state = GameState.GAMEOVER;
+        finalScore.text = "Score: " + score;
         gameOverScreen.SetActive(true);
+        gameInfos.SetActive(false);
+        DisplayMenus(state);
     }
 
     public void Restart()
@@ -116,7 +120,12 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void PauseGame(GameState currentState)
+    public void CloseGame()
+    {
+        Application.Quit();
+    }
+
+    private void DisplayMenus(GameState currentState)
     {
         Color screenColor = new Color32(0, 0, 0, 0);
 
@@ -125,6 +134,10 @@ public class GameManager : MonoBehaviour
             pauseScreen.SetActive(true);
             screenColor.a = 0.5f;
         }
+        else if(currentState == GameState.GAMEOVER)
+        {
+            screenColor.a = 0.8f;
+        }
         else 
         {
             pauseScreen.SetActive(false);
@@ -132,4 +145,5 @@ public class GameManager : MonoBehaviour
 
         pauseScreen.transform.parent.gameObject.GetComponent<Image>().color = screenColor;
     }
+
 }

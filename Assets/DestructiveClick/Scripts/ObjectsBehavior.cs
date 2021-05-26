@@ -15,7 +15,7 @@ public class ObjectsBehavior : MonoBehaviour
     private float maxForce = 16;
     private float torqueRange = 10;
     private float xRangeSpawn = 4;
-    private float yLimit = -7.0f;
+    private float yLimit = -2.5f;
 
     void Awake()
     {
