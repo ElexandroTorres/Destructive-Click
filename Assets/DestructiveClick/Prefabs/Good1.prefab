@@ -123,6 +123,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: daab346ce59101049992739577c38b2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  clickPoints: {fileID: 3147680238811456569, guid: 93c2cc2411e390343bd822375adfaadb,
+    type: 3}
   explosionParticle: {fileID: 15085447402717889, guid: 743ce290c74ae49c19aa3f128322fc7e,
     type: 3}
   destructionPoints: 10

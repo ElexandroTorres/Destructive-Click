@@ -10,7 +10,6 @@ public class ClickAndSwipe : MonoBehaviour
     private GameManager gameManager;
     private Camera camera;
     private Vector3 mousePos;
-
     private bool isSwiping = false;
     void Awake()
     {
@@ -64,5 +63,10 @@ public class ClickAndSwipe : MonoBehaviour
         {
             collision.gameObject.GetComponent<ObjectsBehavior>().DestroyObject();
         }
+    }
+
+    private void ShowClickPoints()
+    {
+
     }
 }

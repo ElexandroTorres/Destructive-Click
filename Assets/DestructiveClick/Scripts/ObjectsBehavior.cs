@@ -5,6 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class ObjectsBehavior : MonoBehaviour
 {
+    [SerializeField] private GameObject clickPoints;
     [SerializeField] private ParticleSystem explosionParticle;
     private Rigidbody objectRb;
     private GameManager gameManager;
