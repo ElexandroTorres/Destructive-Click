@@ -14,6 +14,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI livesText;
     [SerializeField] private GameObject gameOverScreen;
     [SerializeField] private GameObject titleScreen;
+    [SerializeField] private GameObject pauseScreen;
+    [SerializeField] private GameObject gameInfos;
     private AudioSource mainMusic;
     private float spawnRate = 1.0f;
     private int score;
@@ -22,6 +24,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        titleScreen.SetActive(true);
         mainMusic = GetComponent<AudioSource>();
         mainMusic.volume = volumeControl.value; 
         mainMusic.Play();
@@ -42,6 +45,7 @@ public class GameManager : MonoBehaviour
                 Time.timeScale = 1;
                 isPaused = false;
             }
+            PauseGame(isPaused);
         }
     }
 
@@ -83,12 +87,11 @@ public class GameManager : MonoBehaviour
         spawnRate /= difficult;
         score = 0;
         scoreText.text = "Score: " + score;
-        livesText.text = "Lives: " + lives;
+        livesText.text = lives + " Lives";
         isGameOver = false;
         StartCoroutine(SpawnObject());
         
-        scoreText.gameObject.SetActive(true);
-        livesText.gameObject.SetActive(true);
+        gameInfos.SetActive(true);
         gameOverScreen.SetActive(false);
         titleScreen.SetActive(false);
     }
@@ -98,11 +101,24 @@ public class GameManager : MonoBehaviour
         if(lives > 0)
         {
             lives--;
-            livesText.text = "Score: " + lives;
+            livesText.text = lives + " Lives";
         }
         else 
         {
             GameOver();
         }
+    }
+
+    private void PauseGame(bool state)
+    {
+        pauseScreen.SetActive(state);
+        Color screenColor = new Color32(0, 0, 0, 0);
+
+        if(state == true)
+        {
+            screenColor.a = 0.5f;
+        }
+
+        pauseScreen.transform.parent.gameObject.GetComponent<Image>().color = screenColor;
     }
 }
