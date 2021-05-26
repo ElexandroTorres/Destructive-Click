@@ -24,8 +24,6 @@ public class GameManager : MonoBehaviour
     private float spawnRate = 1.0f;
     private int score;
     private int lives;
-    private bool isPaused = false;
-    
     void Start()
     {
         state = GameState.MAINMENU;
@@ -43,13 +41,11 @@ public class GameManager : MonoBehaviour
             if(state == GameState.RUNING) 
             {
                 Time.timeScale = 0;
-                isPaused = true;
                 state = GameState.PAUSED;
             }
             else if(state == GameState.PAUSED)
             {
                 Time.timeScale = 1;
-                isPaused = false;
                 state = GameState.RUNING;
             }
             
